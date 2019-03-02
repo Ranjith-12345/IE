@@ -1,0 +1,63 @@
+package pacman;
+
+import java.io.*; 
+import java.util.*;
+import java.lang.*;
+class Packmen { 
+      
+    int countUp = 0, countDown = 0; 
+    int countLeft = 0, countRight = 0; 
+    String direction = "" ;
+
+     public void finalPosition(int c, int d,String move, String command) { 
+        if(!command.equalsIgnoreCase("report")){
+           direction = move;
+        }
+        
+        if(command.equalsIgnoreCase("report")){
+            System.out.println( (c+(countRight - countLeft))+ ","+ (d+(countUp - countDown)) + ","+ direction); 
+            System.exit(0); 
+         }
+        
+        else if(move.equalsIgnoreCase("west") && (!(c+(countRight - countLeft) ==0))){
+            countLeft++;
+        }else if(move.equalsIgnoreCase("east") && (c+(countRight - countLeft) < 4)){
+            countRight++;
+        }else if(move.equalsIgnoreCase("north") && (d+(countUp - countDown)<4)){
+            countUp++; 
+        }else if(move.equalsIgnoreCase("south") && (!(d+(countUp - countDown)==0))){
+            countDown++; 
+        } 
+    } 
+}
+
+public class pacman {
+    
+     public static void main(String[] args) 
+     { 
+         Packmen p = new Packmen();
+         Scanner in = new Scanner(System.in);
+         String hold = in.nextLine();
+         String[] holder = hold.split(" ");
+         int c = Integer.parseInt(holder[1]),d=Integer.parseInt(holder[2]);
+         String move = holder[3]; 
+         int temp = 0;
+         String command = "";
+         for(int i=0;i<5*5;i++){
+             command = in.nextLine();
+             if(temp == 0){
+            	 //move=command;
+               p.finalPosition(c,d,move,command);
+               temp++;
+             }else if(command.equalsIgnoreCase("north") || command.equalsIgnoreCase("south") || command.equalsIgnoreCase("east") ||command.equalsIgnoreCase("west")){
+               move = command;
+             } else {
+                p.finalPosition(c,d,move,command); 
+             }
+         }
+
+     }
+}
+
+
+
